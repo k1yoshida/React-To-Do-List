@@ -7,12 +7,15 @@ class App extends Component {
     super(props);
     this.state = {
       term: '',
-      items: []
+      items: [],
+      id: ''
     };
   }
 
   onChange = (event) => {
-    this.setState({ term: event.target.value });
+    this.setState({
+      term: event.target.value
+    });
   }
 
   onSubmit = (event) => {
@@ -23,11 +26,13 @@ class App extends Component {
     });
   }
 
-  delete = (event) => {
+
+  deleteItem = (event, index) => {
+    const items = this.state.items;
+    items.splice(index, 1);
     this.setState({
-      items: [this.state.items.splice(this.state.index)]
+      items: items
     });
-    console.log(this.state.index)
   }
 
   render() {
@@ -37,7 +42,8 @@ class App extends Component {
           <input value={this.state.term} onChange={this.onChange} />
           <button>Submit</button>
         </form>
-        <List items={this.state.items} />
+        <List items={this.state.items} deleteItem={this.deleteItem} />
+       {/*Need to pass this.state as a prop to the List Component*/}
       </div>
     );
   }
