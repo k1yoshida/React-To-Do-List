@@ -1,12 +1,20 @@
 import React from 'react';
 
-const List = ({ items, deleteItem }) => (
+const List = ({ items, deleteItem, saveItem, onChange, editItem, onClick, testItem }) => {
+
+return (
   <ul>
     {
-      items.map((item, index) => <li key={index}>{item} <button key={item} onClick={(e) => deleteItem(e, index)}>Remove</button> </li>)
-    /* the onClick has a function and we are passing back the index to the App.js page. the onClick is taking in an event, and it is running the deleteItem function while taking in the event (e) and the index which is generated when you generate the li*/
+      items.map((item, index) => item.isEditing ? (
+        <li key={"edit" + index}><input type="text" onChange={() => onChange(index)}/><button onSubmit={() => saveItem(index)} >Save</button></li>
+      ) : (
+        <li key={index}>{item.value}<button onClick={() => deleteItem(index)}>Remove</button><button onClick={() =>editItem(index)}>Edit</button></li>
+      ))
     }
   </ul>
 );
+}
 
 export default List;
+
+/* the onClick has a function and we are passing back the index to the App.js page. the onClick is taking in an event, and it is running the deleteItem function while taking in the event (e) and the index which is generated when you generate the li*/

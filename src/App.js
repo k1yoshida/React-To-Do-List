@@ -7,8 +7,7 @@ class App extends Component {
     super(props);
     this.state = {
       term: '',
-      items: [],
-      id: ''
+      items: []
     };
   }
 
@@ -18,22 +17,48 @@ class App extends Component {
     });
   }
 
-  onSubmit = (event) => {
+  onSubmit = (event, index) => {
     event.preventDefault();
     this.setState({
       term: '',
-      items: [...this.state.items, this.state.term]
+      items: [...this.state.items, { value: this.state.term, isEditing: false }],
     });
   }
 
-
-  deleteItem = (event, index) => {
+  deleteItem = (index) => {
     const items = this.state.items;
     items.splice(index, 1);
     this.setState({
       items: items
     });
   }
+
+  editItem = (index, items, toggleEditing) => {
+    this.toggleEditing(index, items);
+  }
+
+  saveItem = (index) => {
+    const isEditing = this.state.isEditing;
+    const items = this.state.items;
+    items.splice(index, 1, this.state.term);
+    this.setState({
+      items: items
+    });
+
+  }
+
+  toggleEditing = (index) => {
+    const itemName = this.state.items[index].value
+    this.setState({
+      items: this.state.items.map(item => {
+        if (item.value==itemName){
+          item.isEditing = true
+        }
+        return item;
+      })
+    });
+  }
+
 
   render() {
     return (
@@ -42,8 +67,7 @@ class App extends Component {
           <input value={this.state.term} onChange={this.onChange} />
           <button>Submit</button>
         </form>
-        <List items={this.state.items} deleteItem={this.deleteItem} />
-       {/*Need to pass this.state as a prop to the List Component*/}
+        <List items={this.state.items} deleteItem={this.deleteItem} editItem={this.editItem} onChange={this.onChange} saveItem={this.saveItem} toggleEditing={this.toggleEditing} isEditing={this.state.isEditing}  testItem={this.testItem}/>
       </div>
     );
   }
