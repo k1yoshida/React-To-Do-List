@@ -1,19 +1,29 @@
-import React from 'react';
+import React from "react";
+import ListItem from "./ListItem";
 
-const List = ({ items, deleteItem, saveItem, onChange, editItem, onClick, testItem, value }) => {
-
-return (
-  <ul>
-    {
-      items.map((item, index) => item.isEditing ? (
-        <li key={"edit" + index}><input type="text" value={value} onChange={onChange}/><button onClick={() => saveItem(index)} >Save</button></li>
-      ) : (
-        <li key={index}>{item.value}<button onClick={() => deleteItem(index)}>Remove</button><button onClick={() =>editItem(index)}>Edit</button></li>
-      ))
-    }
-  </ul>
-);
+class List extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
 }
+
+const List = ({ items, deleteItem, saveItem, onChange, editItem }) => {
+  return (
+    <ul>
+      {items.map((item, index) => (
+        <ListItem
+          saveItem={saveItem}
+          value={item.value}
+          onChange={onChange}
+          editItem={editItem}
+          index={index}
+          deleteItem={deleteItem}
+        />
+      ))}
+    </ul>
+  );
+};
 
 export default List;
 
