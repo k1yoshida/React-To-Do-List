@@ -1,12 +1,12 @@
 import React from 'react';
 
-const List = ({ items, deleteItem, saveItem, onChange, editItem, onClick, testItem }) => {
+const List = ({ items, deleteItem, saveItem, onChange, editItem, onClick, testItem, value }) => {
 
 return (
   <ul>
     {
       items.map((item, index) => item.isEditing ? (
-        <li key={"edit" + index}><input type="text" onChange={() => onChange(index)}/><button onSubmit={() => saveItem(index)} >Save</button></li>
+        <li key={"edit" + index}><input type="text" value={value} onChange={onChange}/><button onClick={() => saveItem(index)} >Save</button></li>
       ) : (
         <li key={index}>{item.value}<button onClick={() => deleteItem(index)}>Remove</button><button onClick={() =>editItem(index)}>Edit</button></li>
       ))

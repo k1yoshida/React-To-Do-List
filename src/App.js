@@ -38,20 +38,22 @@ class App extends Component {
   }
 
   saveItem = (index) => {
-    const isEditing = this.state.isEditing;
     const items = this.state.items;
-    items.splice(index, 1, this.state.term);
+    items.splice(index, 1, {value: this.state.term, isEditing: false});
     this.setState({
+      term: '',
       items: items
+
     });
+    console.log(items)
 
   }
 
   toggleEditing = (index) => {
-    const itemName = this.state.items[index].value
+    const itemName = this.state.items[index].value;
     this.setState({
       items: this.state.items.map(item => {
-        if (item.value==itemName){
+        if (item.value===itemName){
           item.isEditing = true
         }
         return item;
@@ -67,7 +69,7 @@ class App extends Component {
           <input value={this.state.term} onChange={this.onChange} />
           <button>Submit</button>
         </form>
-        <List items={this.state.items} deleteItem={this.deleteItem} editItem={this.editItem} onChange={this.onChange} saveItem={this.saveItem} toggleEditing={this.toggleEditing} isEditing={this.state.isEditing}  testItem={this.testItem}/>
+        <List value= {this.state.term} items={this.state.items} deleteItem={this.deleteItem} editItem={this.editItem} onChange={this.onChange} saveItem={this.saveItem} toggleEditing={this.toggleEditing} isEditing={this.state.isEditing}  testItem={this.testItem}/>
       </div>
     );
   }
